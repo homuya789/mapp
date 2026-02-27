@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart'; // 구글 폰트 패키지
 import 'package:smooth_page_indicator/smooth_page_indicator.dart'; // 페이지 인디케이터 패키지
 
 class Inbo extends StatefulWidget {
@@ -62,7 +61,7 @@ class _InboState extends State<Inbo> {
 
                       Text.rich(
                         TextSpan(
-                          style: GoogleFonts.nanumMyeongjo(
+                          style: const TextStyle(
                             fontSize: 32,
                             fontWeight: FontWeight.w800,
                             color: Color(0xFFDBCEA5), // 기본 색

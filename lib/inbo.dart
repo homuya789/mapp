@@ -40,6 +40,7 @@ class _InboState extends State<Inbo> {
 
           Text.rich(
             TextSpan(
+              //style: const TextStyle(
               style: GoogleFonts.nanumMyeongjo(
                 fontSize: 32,
                 fontWeight: FontWeight.w800,
