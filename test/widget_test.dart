@@ -1,124 +1,185 @@
 import 'package:flutter/material.dart';
-import 'package:smooth_page_indicator/smooth_page_indicator.dart'; // 페이지 인디케이터 패키지
+import 'package:google_fonts/google_fonts.dart';
 
-class Inbo extends StatefulWidget {
-  const Inbo({super.key});
+//SafeArea 사용해서 노치, 홈인디케이터 영역 피하기
+
+class Home extends StatefulWidget {
+  const Home({super.key});
 
   @override
-  State<Inbo> createState() => _InboState();
+  State<Home> createState() => _HomeState();
 }
 
-class _InboState extends State<Inbo> {
-  final PageController _controller = PageController();
-  final int pageCount = 4;
+//----------------글 작성 박스----------------
+class WriteBox extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: double.infinity,
+      padding: EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(20),
+      ),
+      child: Row(
+        children: [
+          CircleAvatar(
+            radius: 18,
+            backgroundImage: AssetImage("assets/unnamed.png"),
+          ),
+          SizedBox(width: 10),
+          Text(
+            "여기에 글을 작성해보세요.",
+            style: GoogleFonts.nanumMyeongjo(
+              fontSize: 13,
+              color: Color(0xFF9C8F84),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+//------------------------------------------
+
+class PostList extends StatelessWidget {
+  final List<String> posts = [
+    "오늘 너무 힘든 하루였어요.",
+    "누군가 제 이야기를 들어줬으면 좋겠어요.",
+    "그래도 조금씩 괜찮아질 거라 믿어요.",
+  ];
+  //리스트를 게시글로 변환하는 위젯
+  @override
+  Widget build(BuildContext context) {
+    return Column(children: posts.map((post) => PostCard(text: post)).toList());
+  }
+}
+
+//-------게시글 ui----------------
+class PostCard extends StatelessWidget {
+  final String text;
+
+  const PostCard({super.key, required this.text});
 
   @override
   Widget build(BuildContext context) {
+    return Container(
+      width: double.infinity,
+      margin: EdgeInsets.only(bottom: 12),
+      padding: EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(20),
+      ),
+      child: Text(
+        text,
+        textAlign: TextAlign.center,
+        style: GoogleFonts.nanumMyeongjo(
+          fontSize: 13,
+          color: Color(0xFF3D2E26),
+        ),
+      ),
+    );
+  }
+}
+
+//----------------홈 화면----------------
+class _HomeState extends State<Home> {
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFF0E6DC),
+      backgroundColor: const Color.fromRGBO(248, 246, 242, 1),
       appBar: AppBar(
-        backgroundColor: Colors.transparent, // 투명한 배경
-        title: const Text(
-          "쉼표",
-          style: TextStyle(
-            fontSize: 24,
-            fontWeight: FontWeight.bold,
-            color: Color(0xFFE8B88A),
+        backgroundColor: const Color.fromARGB(255, 255, 255, 255),
+        title: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisSize: MainAxisSize.min, // 중요! 높이 최소화
+          children: [
+            Text(
+              "Komma",
+              style: GoogleFonts.dmSerifDisplay(
+                fontSize: 30,
+                color: const Color(0xFF3D2E26),
+              ),
+            ),
+            //const SizedBox(height: 2),
+            Text(
+              "당신의 이야기를 들을게요.",
+              style: GoogleFonts.nanumMyeongjo(
+                fontSize: 10,
+                color: Color(0xFF9C8F84),
+              ),
+            ),
+            SizedBox(height: 6),
+          ],
+        ),
+        bottom: PreferredSize(
+          preferredSize: const Size.fromHeight(1),
+          child: Container(
+            height: 2,
+            color: const Color.fromRGBO(232, 227, 220, 1), //AppBar 아래 선
           ),
         ),
-        centerTitle: false, // 왼쪽 정렬
-        // 그림자 elevation: 0
+        actions: [
+          TextButton(
+            child: const Text("힘들어요"),
+            style: TextButton.styleFrom(
+              foregroundColor: const Color(0xFF3D2E26),
+            ),
+            onPressed: () {},
+          ),
+          TextButton(
+            child: const Text("응원해줘요"),
+            style: TextButton.styleFrom(
+              foregroundColor: const Color(0xFF3D2E26),
+            ),
+            onPressed: () {},
+          ),
+          TextButton(
+            child: const Text("고마워요"),
+            style: TextButton.styleFrom(
+              foregroundColor: const Color(0xFF3D2E26),
+            ),
+            onPressed: () {},
+          ),
+        ],
       ),
-      body: Column(
-        children: [
-          Expanded(
-            child: PageView(
-              controller: _controller,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 24),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const SizedBox(height: 40),
-                      const Icon(
-                        Icons.nightlight_round,
-                        size: 120,
-                        color: Colors.white24,
-                      ),
-                      const Align(
-                        alignment: Alignment.centerLeft,
-                        child: Text(
-                          "당신의 감정",
-                          style: TextStyle(
-                            color: Color(0xFF3D2E26),
-                            fontSize: 12,
-                          ),
-                        ),
-                      ),
 
-                      const SizedBox(height: 12),
-
-                      Text.rich(
-                        TextSpan(
-                          style: const TextStyle(
-                            fontSize: 32,
-                            fontWeight: FontWeight.w800,
-                            color: Color(0xFFDBCEA5), // 기본 색
-                          ),
-                          children: const [
-                            TextSpan(text: "가끔은 그냥\n"),
-                            TextSpan(
-                              text: "지치잖아요",
-                              style: TextStyle(color: Color(0xFF3D2E26)),
-                            ),
-                          ],
-                        ),
-                      ),
-
-                      const SizedBox(height: 16),
-
-                      const Align(
-                        alignment: Alignment.centerLeft,
-                        child: Text(
-                          "아무것도 아닌 것에 상처받고, 설명하기도 힘든 그 감정들.\n여기선 억지로 괜찮은 척 안 해도 됩니다.",
-                          style: TextStyle(
-                            fontSize: 14,
-                            color: Color(0xFF7A6A60),
-                            height: 1.6,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: EdgeInsets.only(left: 60, right: 60, top: 20, bottom: 40),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                "TODAY",
+                style: TextStyle(
+                  fontSize: 10,
+                  color: Color.fromARGB(200, 149, 106, 1),
                 ),
-
-                /// ===== 슬라이드 2 =====
-                const Center(child: Text("슬라이드 2")),
-
-                /// ===== 슬라이드 3 =====
-                const Center(child: Text("슬라이드 3")),
-
-                /// ===== 슬라이드 4 =====
-                const Center(child: Text("슬라이드 4")),
-              ],
-            ),
+              ),
+              Text(
+                '"지쳐도 괜찮아요. 오늘 하루를 살아낸 것만으로도 충분합니다."',
+                textAlign: TextAlign.center,
+                style: GoogleFonts.nanumMyeongjo(
+                  fontSize: 13,
+                  color: Color(0xFF3D2E26),
+                ),
+              ),
+              SizedBox(height: 20),
+              WriteBox(),
+              SizedBox(height: 20),
+              PostList(),
+            ],
           ),
-
-          // 아래 인디케이터
-          SmoothPageIndicator(
-            controller: _controller,
-            count: pageCount,
-            effect: ExpandingDotsEffect(
-              dotWidth: 6,
-              dotHeight: 6,
-              activeDotColor: const Color(0xFFE8B88A),
-              dotColor: Colors.grey.shade400,
-              expansionFactor: 4,
-            ),
-          ),
-
-          const SizedBox(height: 24),
+        ),
+      ),
+      bottomNavigationBar: BottomNavigationBar(
+        items: const [
+          BottomNavigationBarItem(icon: Icon(Icons.home), label: "홈"),
+          BottomNavigationBarItem(icon: Icon(Icons.edit), label: "작성"),
+          BottomNavigationBarItem(icon: Icon(Icons.person), label: "마이"),
         ],
       ),
     );
