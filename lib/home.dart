@@ -185,8 +185,40 @@ class _HomeState extends State<Home> {
               width: double.infinity,
               height: 150,
               color: Colors.white,
-              child: Column(children: [Text("안녕하세요 반갑습니다!!")]),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Center(
+                    child: Text(
+                      "안녕하세요 반갑습니다!!",
+                      style: GoogleFonts.nanumMyeongjo(
+                        fontSize: 16,
+                        color: Color(0xFF3D2E26),
+                      ),
+                    ),
+                  ),
+                  SizedBox(height: 5),
+                  Center(
+                    child: Text(
+                      "1분전",
+                      style: GoogleFonts.nanumMyeongjo(
+                        fontSize: 12,
+                        color: Color(0xFF3D2E26),
+                      ),
+                    ),
+                  ),
+                  Row(
+                    children: [
+                      Padding(
+                        padding: EdgeInsetsGeometry.only(left: 300),
+                        child: Image.asset("assets/icon.png", width: 25),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
             ),
+
             SizedBox(height: 20),
             PostList(),
           ],
